@@ -1,6 +1,9 @@
 <script lang="ts">
   import MainCad from '../MainCad.svelte';
 
+let { data } = $props();
+
+
 </script>
 
 
@@ -11,15 +14,16 @@
       Crie seu usuário e senha para acessar o melhor site de Agenda do MUNDO!!
     </p>
 
-    <form action="">
-      <label for="username">Insira o nome do seu usuário:</label>
-      <input type="text" />
+    <form method="POST">
+      <label for="username" >Insira o nome do seu usuário:</label>
+      <input type="text" name="description"/>
 
       <label for="password">Insira a sua senha:</label>
       <input type="password"/>
 
       <button type="submit">Cadastrar-se</button>
     </form>
+    <a class="voltar" href="/login">Voltar</a>
 </MainCad>
 <style>
 
@@ -29,19 +33,6 @@
     box-sizing: border-box;
   }
 
-
-
-:global(html),
-:global(body) {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-  background: linear-gradient(90deg,rgba(35, 106, 117, 1) 18%,rgba(87, 199, 133, 1) 67%, rgba(175, 237, 83, 1) 95%);
-}
-
-  
-   
   h1 {
     margin-bottom: 10px;
     color: #222;
@@ -99,6 +90,17 @@
   button:hover {
     background-color: #45a049;
     transform: scale(1.02);
+  }
+
+  .voltar {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+    color: black;
+    text-decoration: none;
+  }
+  .voltar:hover {
+    text-decoration: underline;
   }
 
 </style>

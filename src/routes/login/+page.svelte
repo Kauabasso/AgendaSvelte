@@ -1,6 +1,6 @@
 <script lang="ts">
  
-  import MainCad from './MainCad.svelte';
+  import MainCad from '../MainCad.svelte';
 </script>
 
 
