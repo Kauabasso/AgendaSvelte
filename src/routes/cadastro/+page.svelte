@@ -1,26 +1,24 @@
 <script lang="ts">
- 
-  import MainCad from './MainCad.svelte';
+  import MainCad from '../MainCad.svelte';
+
 </script>
 
 
 
 <MainCad>
-  <h1>Login</h1>
+  <h1>Cadastro</h1>
     <p>
-      Insira seu usuário e senha para acessar o melhor site de Agenda do MUNDO!!
+      Crie seu usuário e senha para acessar o melhor site de Agenda do MUNDO!!
     </p>
 
     <form action="">
-      <label for="username">Usuário:</label>
+      <label for="username">Insira o nome do seu usuário:</label>
       <input type="text" />
 
-      <label for="password">Senha:</label>
-      <input type="password" />
+      <label for="password">Insira a sua senha:</label>
+      <input type="password"/>
 
-      <a class="cadastro-link" href="/cadastro">Não tem uma conta? Cadastre-se aqui</a>
-
-      <button type="submit">Entrar</button>
+      <button type="submit">Cadastrar-se</button>
     </form>
 </MainCad>
 <style>
@@ -43,14 +41,7 @@
 }
 
   
-   .cadastro-link {
-    color: black;
-    text-decoration: none;
-  }
-  .cadastro-link:hover {
-    text-decoration: underline;
-  }
-
+   
   h1 {
     margin-bottom: 10px;
     color: #222;
@@ -64,7 +55,6 @@
     word-break: break-word;
   }
 
-  
   form {
     display: flex;
     flex-direction: column;
@@ -112,3 +102,8 @@
   }
 
 </style>
+
+
+
+
+
