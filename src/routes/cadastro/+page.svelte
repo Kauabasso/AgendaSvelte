@@ -1,30 +1,57 @@
 <script lang="ts">
-  import MainCad from '../MainCad.svelte';
+  import MainCad from '../MainCad.svelte'; 
+  import { goto } from '$app/navigation';
+  import { currentUser } from '$lib/store';
 
-let { data } = $props();
+  let usuario = '';
+  let senha = '';
 
+  function handleSubmit(e: Event) {
+    e.preventDefault();
 
+    if (!usuario.trim() || !senha) {
+      alert('Preencha todos os campos.');
+      return;
+    }
+
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+    // não permite usuário duplicado
+    if (users.some((u: any) => u.usuario === usuario)) {
+      alert('Nome de usuário já existe.');
+      return;
+    }
+
+    const newUser = { usuario, senha };
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+
+    // ir para home
+    currentUser.set(usuario);
+    goto('/');
+  }
 </script>
-
-
 
 <MainCad>
   <h1>Cadastro</h1>
-    <p>
-      Crie seu usuário e senha para acessar o melhor site de Agenda do MUNDO!!
-    </p>
+  <p>Crie seu usuário e senha para acessar o melhor site de Agenda do MUNDO!!</p>
 
-    <form method="POST">
-      <label for="username" >Insira o nome do seu usuário:</label>
-      <input type="text" name="description"/>
+  <form on:submit={handleSubmit}>
+    <label for="usuario">Insira o nome do seu usuário:</label>
+    <input id="usuario" type="text" bind:value={usuario} name="usuario" required />
 
-      <label for="password">Insira a sua senha:</label>
-      <input type="password"/>
+    <label for="senha">Insira a sua senha:</label>
+    <input id="senha" type="password" bind:value={senha} name="senha" required />
 
-      <button type="submit">Cadastrar-se</button>
-    </form>
-    <a class="voltar" href="/login">Voltar</a>
+    <button type="submit">Cadastrar-se</button>
+  </form>
+
+  <a class="voltar" href="/login">Voltar</a>
 </MainCad>
+
+
+
+
 <style>
 
   * {
@@ -35,12 +62,12 @@ let { data } = $props();
 
   h1 {
     margin-bottom: 10px;
-    color: #222;
+    color: black;
   }
 
   p {
     font-size: 14px;
-    color: #444;
+    color: black;
     margin-bottom: 20px;
     line-height: 1.4;
     word-break: break-word;

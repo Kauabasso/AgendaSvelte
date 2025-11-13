@@ -1,28 +1,48 @@
 <script lang="ts">
- 
-  import MainCad from '../MainCad.svelte';
+  import MainCad from '../MainCad.svelte'; 
+  import { goto } from '$app/navigation';
+  import { currentUser } from '$lib/store';
+
+  let usuario = '';
+  let senha = '';
+
+  function handleLogin(e: Event) {
+    e.preventDefault();
+
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+    const user = users.find((u: any) => u.usuario === usuario && u.senha === senha);
+
+    if (!user) {
+      alert('Usuário ou senha incorretos.');
+      return;
+    }
+
+    // ir para home
+    currentUser.set(user.usuario);
+    goto('/');
+  }
 </script>
-
-
 
 <MainCad>
   <h1>Login</h1>
-    <p>
-      Insira seu usuário e senha para acessar o melhor site de Agenda do MUNDO!!
-    </p>
+  <p>Insira seu usuário e senha para acessar o melhor site de Agenda do MUNDO!!</p>
 
-    <form action="">
-      <label for="username">Usuário:</label>
-      <input type="text" />
+  <form on:submit={handleLogin}>
+    <label for="usuario">Usuário:</label>
+    <input id="usuario" type="text" bind:value={usuario} required />
 
-      <label for="password">Senha:</label>
-      <input type="password" />
+    <label for="senha">Senha:</label>
+    <input id="senha" type="password" bind:value={senha} required />
+    <a class="cadastro-link" href="/cadastro">Não tem uma conta? Cadastre-se aqui</a>
 
-      <a class="cadastro-link" href="/cadastro">Não tem uma conta? Cadastre-se aqui</a>
-
-      <button type="submit">Entrar</button>
-    </form>
+    <button type="submit">Entrar</button>
+  </form>
 </MainCad>
+
+
+
+
 <style>
 
   * {
@@ -53,12 +73,12 @@
 
   h1 {
     margin-bottom: 10px;
-    color: #222;
+    color: black;
   }
 
   p {
     font-size: 14px;
-    color: #444;
+    color: black;
     margin-bottom: 20px;
     line-height: 1.4;
     word-break: break-word;
