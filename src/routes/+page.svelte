@@ -2,6 +2,9 @@
   import { onMount } from 'svelte';
   import { currentUser } from '$lib/store';
   import { goto } from '$app/navigation';
+  import Todos from '$lib/Todos.svelte';
+   export let data;
+  
 
   let user: string | null = null;
 
@@ -19,7 +22,8 @@
 
 {#if user}
   <h1>Bem vindo a sua Agenda, {user}!</h1>
-  
+  <Todos {data} />
+
   <button on:click={logout}>Sair</button>
 
 {/if}
