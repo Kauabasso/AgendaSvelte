@@ -1,4 +1,4 @@
-// src/routes/todos/+page.server.js
+
 import { db } from '$lib/server/database';
 import { fail } from '@sveltejs/kit';
 
@@ -22,11 +22,11 @@ export const actions = {
     const rawDescription = form.get('description');
     const rawDate = form.get('date');
 
-    // converte para string de forma segura
+   
     const description = rawDescription ? String(rawDescription).trim() : '';
     const date = rawDate ? String(rawDate).trim() : '';
 
-    // validações
+   
     if (description.length === 0) {
       return fail(400, { error: true, message: 'A descrição não pode ser vazia.' });
     }
@@ -59,5 +59,27 @@ export const actions = {
       console.error('Erro ao deletar todo:', error);
       return fail(500, { error: true, message: 'Falha ao deletar a tarefa do banco de dados.' });
     }
+  },
+
+  update: async ({ request }) => {
+  const form = await request.formData();
+
+  const id = form.get("id");
+  const description = String(form.get("description"));
+  const date = String(form.get("date"));
+
+  if (!id) return fail(400, { error: "ID não enviado" });
+
+  try {
+    await db.execute(
+      "UPDATE eventos SET nome = ?, data = ? WHERE id = ?",
+      [description, date, id]
+    );
+    return { success: true };
+  } catch (err) {
+    console.error(err);
+    return fail(500, { error: "Erro ao atualizar" });
   }
+}
+
 };

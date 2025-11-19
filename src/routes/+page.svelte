@@ -21,10 +21,12 @@
 </script>
 
 {#if user}
+<div class="bem-vindo">
   <h1>Bem vindo a sua Agenda, {user}!</h1>
-  <Todos {data} />
+</div>
+<Todos {data} />
 
-  <button on:click={logout}>Sair</button>
+  <button class="sair" on:click={logout}>Sair</button>
 
 {/if}
 
@@ -41,15 +43,41 @@
   height: 100%;
   overflow: hidden;
   background: linear-gradient(90deg,rgba(35, 106, 117, 1) 18%,rgba(87, 199, 133, 1) 67%, rgba(175, 237, 83, 1) 95%);
+  
+
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+
 }
 
-  
-  button { 
-    padding: 8px 12px; 
-    border-radius: 6px; 
-    background:#4caf50; 
-    color:white; 
+  .bem-vindo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #7ae47e;
+    color: white;
+    border: 6px solid black;
+  }
+
+  .sair{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: white; 
     border:none; 
     cursor:pointer;
-    }
+    height: 50px;
+    background-color: #7ae47e;
+    font-size: 25px;
+    font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: bold;
+
+  }
+
 </style>
