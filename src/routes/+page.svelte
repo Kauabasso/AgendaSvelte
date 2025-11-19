@@ -33,6 +33,17 @@
     font-size: 2rem; 
     margin-bottom: 1rem; 
   }
+
+:global(html),
+:global(body) {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background: linear-gradient(90deg,rgba(35, 106, 117, 1) 18%,rgba(87, 199, 133, 1) 67%, rgba(175, 237, 83, 1) 95%);
+}
+
+  
   button { 
     padding: 8px 12px; 
     border-radius: 6px; 
