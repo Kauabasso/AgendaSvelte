@@ -14,13 +14,9 @@
   function openEdit(todo: any) {
     editId = todo.id;
     editDescription = todo.description;
-
-   
     editDate = String(todo.date).split("T")[0];
-
     showEditModal = true;
   }
-
   function closeEdit() {
     showEditModal = false;
   }
@@ -132,7 +128,7 @@ h1, table, input, button {
 .centered {
   max-width: 30em;
   margin: 0 auto;
-  padding: 1rem;
+  margin-top: -30px;
   box-sizing: border-box;
   font-family: "Roboto", Arial, sans-serif;
 }
@@ -186,7 +182,7 @@ h1, table, input, button {
 .centered input[type="date"]:focus,
 .form-add input:hover,
 .form-add input:focus {
-  background: #f0f0f0;
+  background: #cccbcb;
   transform: translateZ(20px) translateX(-5px) translateY(-5px);
   box-shadow: 10px 10px 0 #000;
 }
@@ -241,9 +237,12 @@ table {
 
 .tabela:hover,
 table:hover {
-  transform: rotateX(5deg) rotateY(1deg) scale(1.02);
-  box-shadow: 25px 25px 0 -5px #e9b50b, 25px 25px 0 0 #000;
+  transform: scale(1.015);
+  box-shadow: 18px 18px 0 #000;
 }
+
+
+
 
 .tabela thead,
 table thead {
@@ -259,13 +258,12 @@ table th,
 table td {
   padding: 12px;
   text-align: left;
-  border-bottom: 2px solid #000;
   vertical-align: middle;
 }
 
 .tabela tr:hover,
 table tr:hover {
-  background: #f7f7f7;
+  background: #e7e5e5;
 }
 
 .acoes {
@@ -291,6 +289,9 @@ table tr:hover {
 .delete {
   background: #ff6b6b;
   color: #000;
+  border: 3px solid black;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .editar:hover,

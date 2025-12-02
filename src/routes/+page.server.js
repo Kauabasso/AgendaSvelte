@@ -5,28 +5,39 @@ import { fail } from '@sveltejs/kit';
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
   try {
-    const [todos] = await db.query(`SELECT id, nome AS description, data AS date FROM eventos ORDER BY id DESC`);
-    return { todos };
+    const [todos] = await db.query(`
+      SELECT id, nome AS description, data AS date 
+      FROM eventos 
+      ORDER BY id DESC
+    `);
+
+    
+    const res = await fetch("https://worldtimeapi.org/api/timezone/America/Sao_Paulo");
+    const data = await res.json();
+
+    return { 
+      todos,
+      currentDateTimeMs: new Date(data.datetime).getTime() 
+    };
+
   } catch (error) {
     console.error('Erro ao carregar todos:', error);
-    return { todos: [] };
+    return { todos: [], currentDateTimeMs: null };
   }
 }
+
 
 /** @type {import('./$types').Actions} */
 export const actions = {
   create: async ({ request }) => {
     const form = await request.formData();
 
-    
     const rawDescription = form.get('description');
     const rawDate = form.get('date');
 
-   
     const description = rawDescription ? String(rawDescription).trim() : '';
     const date = rawDate ? String(rawDate).trim() : '';
 
-   
     if (description.length === 0) {
       return fail(400, { error: true, message: 'A descrição não pode ser vazia.' });
     }
@@ -62,24 +73,23 @@ export const actions = {
   },
 
   update: async ({ request }) => {
-  const form = await request.formData();
+    const form = await request.formData();
 
-  const id = form.get("id");
-  const description = String(form.get("description"));
-  const date = String(form.get("date"));
+    const id = form.get("id");
+    const description = String(form.get("description"));
+    const date = String(form.get("date"));
 
-  if (!id) return fail(400, { error: "ID não enviado" });
+    if (!id) return fail(400, { error: "ID não enviado" });
 
-  try {
-    await db.execute(
-      "UPDATE eventos SET nome = ?, data = ? WHERE id = ?",
-      [description, date, id]
-    );
-    return { success: true };
-  } catch (err) {
-    console.error(err);
-    return fail(500, { error: "Erro ao atualizar" });
+    try {
+      await db.execute(
+        "UPDATE eventos SET nome = ?, data = ? WHERE id = ?",
+        [description, date, id]
+      );
+      return { success: true };
+    } catch (err) {
+      console.error(err);
+      return fail(500, { error: "Erro ao atualizar" });
+    }
   }
-}
-
 };
