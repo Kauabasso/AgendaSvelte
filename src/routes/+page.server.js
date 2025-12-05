@@ -11,20 +11,28 @@ export async function load() {
       ORDER BY id DESC
     `);
 
-    
-    const res = await fetch("https://worldtimeapi.org/api/timezone/America/Sao_Paulo");
-    const data = await res.json();
+    let currentDateTimeMs = null;
 
-    return { 
-      todos,
-      currentDateTimeMs: new Date(data.datetime).getTime() 
-    };
+    try {
+      const res = await fetch("https://worldtimeapi.org/api/timezone/America/Sao_Paulo");
+      if (res.ok) {
+        const data = await res.json();
+        currentDateTimeMs = new Date(data.datetime).getTime();
+      } else {
+        console.error("Erro na API de horário:", res.status);
+      }
+    } catch (err) {
+      console.error("Falha ao conectar à API de horário:", err);
+    }
+
+    return { todos, currentDateTimeMs };
 
   } catch (error) {
     console.error('Erro ao carregar todos:', error);
     return { todos: [], currentDateTimeMs: null };
   }
 }
+
 
 
 /** @type {import('./$types').Actions} */
